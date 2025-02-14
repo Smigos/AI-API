@@ -5,6 +5,9 @@ Ez egy egyszerű FastAPI chatbot, amely egy finomhangolt GPT-2 modellt használ.
 Beállítás és futtatás
 ---
 
+AI_pretrained.py ezzel tudod traineltetni az AI-t kb 2 órát vesz időbe
+AI_Run.py majd ezzel tudod futatni az AI-t később olvashatod hogyan
+
 Anaconda környezet beállítása
 ---
 
