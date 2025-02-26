@@ -24,23 +24,43 @@ class PromptRequest(BaseModel):
     prompt: str
 
 # Generate response function
+# Generate response function
 def generate_response(prompt: str) -> str:
     try:
         if not prompt.strip():
             return "Input cannot be empty."
         
-        inputs = tokenizer(prompt, return_tensors="pt", padding=True, truncation=True).to(device)
+        prompt = "User: " + prompt + " AI:"
+        
+        # Tokenize input WITH attention mask
+        inputs = tokenizer(
+            prompt, 
+            return_tensors="pt", 
+            padding=True, 
+            truncation=True, 
+            add_special_tokens=True
+        ).to(device)
+
+        # Extract attention mask
+        attention_mask = inputs["attention_mask"]
+
+        # Generate response with attention mask included
         outputs = model.generate(
             inputs["input_ids"],
-            max_length=50,
-            num_return_sequences=1,
-            temperature=0.8,
-            top_p=0.9,
-            no_repeat_ngram_size=2,
-            repetition_penalty=1.2,
+            attention_mask=attention_mask,
+            max_new_tokens=20,
+            do_sample=True,  # Allows randomness
+            temperature=0.9,  # Controls randomness level
+            top_p=0.9,  # Enables nucleus sampling
+            no_repeat_ngram_size=3,  # Prevents repetitive phrases
+            repetition_penalty=1.15,  # Penalizes excessive repetition
+            eos_token_id=tokenizer.eos_token_id
         )
+
+        # Decode response properly
         response = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
         return response
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
