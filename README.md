@@ -35,9 +35,9 @@ Ellenőrizd, hogy a run_api.py a megfelelő modell elérési utat használja.
 Az API futtatása
 ---
 
-Miután beléptél az Anaconda környezetbe, navigálj ahhoz a mappához, ahol a run_api.py található, és indítsd el a szervert:
+Miután beléptél az Anaconda környezetbe, navigálj ahhoz a mappához, ahol a AI_Run.py található, és indítsd el a szervert:
 
-uvicorn run_api:app --reload
+uvicorn AI_Run:app --reload
 
 
 Teszteld az API-t böngészőben: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
